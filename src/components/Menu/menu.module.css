@@ -11,3 +11,17 @@
     display: flex;
     gap: 1rem;
 }
+.menu__link{
+    font-size: 1.5rem;
+}
+.sacola{
+    display: flex;
+    align-items: center;
+}
+.sacola__info{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    margin-left: 0.5rem;
+    font-size: 0.7rem;
+}
