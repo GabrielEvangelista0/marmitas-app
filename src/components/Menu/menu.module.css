@@ -1,0 +1,13 @@
+.menu{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 2rem;
+}
+.menu__logo{
+    font-size: 2rem;
+}
+.menu__ul{
+    display: flex;
+    gap: 1rem;
+}
