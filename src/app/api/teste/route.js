@@ -7,3 +7,7 @@ export async function GET(request, response, next) {
     const data = (await snapshot).docs.map(doc => doc.data());
     return new Response(JSON.stringify(data))
 }
+
+export async function POST(request, response, next) {
+    
+}
