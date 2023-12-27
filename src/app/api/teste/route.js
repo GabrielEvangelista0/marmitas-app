@@ -10,12 +10,14 @@ export async function GET(request, response, next) {
 
 export async function POST(request, response, next) {
     try {
-        const pratos = collection(db, "pratos")
-        const data = await request.body
-        const jsondata = JSON.parse(data)
-        await addDoc(pratos, jsondata)
-        return new Response(data, { status: 201 })
+        const req = await request.body;
+        const data = await new Response(req).text()
+        console.log(JSON.parse(data))
+        await addDoc(collection(db, "pratos"), JSON.parse(data))
+        //const res = {status: 200};
+        return new Response(JSON.stringify(data, {status: 200}))
     } catch (error) {
-        return new Response(JSON.stringify(error), { status: 500 })
+        console.log(error)
+        return new Response(JSON.stringify({error, status: 500}));
     }
 }

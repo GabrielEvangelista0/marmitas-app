@@ -14,39 +14,47 @@ export default function Admin() {
   function handleInputChange(e) {
     const { id, value } = e.target
     setValues({ ...values, [id]: value })
-    
+
   }
   function handleSubmit(e) {
     e.preventDefault()
-    const data = JSON.stringify(values)
+    const data = values
     fetch('http://localhost:3000/api/teste', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
       },
-      body: data
-    }).then(res => res.json()).then(data => {
-      console.log(data);
-      
+      body: JSON.stringify(data)
     })
-    console.log(data);
-    
+      .then(res => res.json())
+      .then(data => {
+        console.log(data)
+      })
+      .catch(err => console.log(err))
   }
-  console.log(values);
   useEffect(() => {
     getData().then(setData)
+    
   }, [])
-
+  console.log(data)
   return (
     <div>
       <h1>Admin</h1>
       <p>This is the admin page</p>
       <Link href={'/'}>Home</Link>
       <form onSubmit={handleSubmit}>
-        <input id="nome" type="text" placeholder="nome" onChange={handleInputChange}/>
-        <input id="descricao" type="text" placeholder="descrição" onChange={handleInputChange}/>
+        <input id="nome" type="text" placeholder="nome" onChange={handleInputChange} />
+        <input id="descricao" type="text" placeholder="descrição" onChange={handleInputChange} />
         <button type="submit">Enviar</button>
       </form>
+      <ul>
+        {data.map((item, index) => (
+          <li key={index}>
+            <h2>{item.nome}</h2>
+            <p>{item.descricao}</p>
+          </li>
+        ))}
+      </ul>
     </div>
   )
 }
