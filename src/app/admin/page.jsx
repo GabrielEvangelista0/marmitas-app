@@ -18,8 +18,21 @@ export default function Admin() {
   }
   function handleSubmit(e) {
     e.preventDefault()
-    console.log(values);
+    const data = JSON.stringify(values)
+    fetch('http://localhost:3000/api/teste', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: data
+    }).then(res => res.json()).then(data => {
+      console.log(data);
+      
+    })
+    console.log(data);
+    
   }
+  console.log(values);
   useEffect(() => {
     getData().then(setData)
   }, [])
