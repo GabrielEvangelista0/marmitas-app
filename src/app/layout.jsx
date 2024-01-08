@@ -1,6 +1,7 @@
 import { Montserrat } from 'next/font/google'
 import './globals.css'
 import Menu from '@/components/Menu/Menu'
+import style from './index.css'
 
 const font = Montserrat({ subsets: ['latin'], weight: ['400'] })
 
@@ -12,7 +13,7 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="pt-br">
-      <body className={font.className}>
+      <body className={`${font.className} ${style.body}`}>
         <Menu />
         {children}
       </body>

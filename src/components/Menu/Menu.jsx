@@ -6,7 +6,7 @@ import { IoBag } from "react-icons/io5";
 export default function Menu() {
     return (
         <header className={styles.menu}>
-            <h1 className={styles.menu__logo}>Logo</h1>
+            <Link href={'/'} className={styles.menu__logo}><h1>Logo</h1></Link>
             <nav>
                 <ul className={styles.menu__ul}>
                     <li> <Link href={'/'} className={styles.menu__link}> <FaUser /> </Link> </li>
