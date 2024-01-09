@@ -19,7 +19,7 @@ export default function Admin() {
           <ul>
             {data.map((item, index) => (
               <li key={index}>
-                <Link className={style.item} href={`/pratos/${item.id}`}>
+                <Link className={style.item} href={`/admin/${item.id}`}>
                   <img className={style.img} src={item.imagem} alt="" />
                   <div>
                     <h2>{item.nome}</h2>

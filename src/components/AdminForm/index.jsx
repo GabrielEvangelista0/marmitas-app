@@ -16,20 +16,23 @@ export default function AdminForm(props) {
     setImage(e.target.files[0])
     console.log(values)
   }
+  function enviarImagem() {
+    if (image != undefined) {
+      const imgRef = ref(storage, `/pratos/${image.name + values.id}`)
+      uploadBytes(imgRef, image).then((snapshot) => {
+        getDownloadURL(snapshot.ref).then((url) => {
+          setValues({ ...values, imagem: url })
+        });
+      });
+      alert('imagem enviada')
+    }
+  }
   async function handleSubmit(e) {
     e.preventDefault()
     const data = values
-    const imgRef = ref(storage, `/pratos/${image.name + values.id}`)
-    uploadBytes(imgRef, image).then((snapshot) => {
-      getDownloadURL(snapshot.ref).then((url) => {
-        setValues({ ...values, imagem: url })
-      });
-    });
     if (data.imagem != undefined) {
       postData('/api/pratos', data)
       alert(`O prato ${JSON.stringify(data)}`)
-    } else {
-      alert('erro: imagem não foi enviada')
     }
   }
   useEffect(() => {
@@ -37,10 +40,20 @@ export default function AdminForm(props) {
     setValues({ ...values, id })
 
   }, [])
+  console.log(values)
   return (
     <form className={style.form} onSubmit={handleSubmit}>
       <input className={style.input} id="nome" type="text" placeholder="nome" onChange={handleInputChange} />
-      <input className={style.input} id="descricao" type="text" placeholder="descrição" onChange={handleInputChange} />
+      <input className={style.input} id="preco" type="number" placeholder="preço" onChange={handleInputChange} />
+      <textarea
+        placeholder="descricao"
+        id="descricao"
+        onChange={handleInputChange}
+        className={style.textarea}
+        name="descricao"
+        cols="30"
+        rows="10">
+        </textarea>
       <input
         className={style.input__file}
         type="file"
@@ -48,7 +61,8 @@ export default function AdminForm(props) {
         name="image"
         onChange={handleImageChange}
       />
-      <button className={style.button} type="submit">Enviar</button>
+      <button className={style.image__button} onClick={enviarImagem} >Confirmar imagem</button>
+      <button className={style.button} type="submit">Enviar Prato</button>
     </form>
   )
 }
