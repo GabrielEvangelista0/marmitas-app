@@ -1,13 +1,11 @@
-'use client';
-
-import Baner from "@/components/Baner";
-import Cardapio from "@/components/Cardapio";
+import Link from "next/link";
 
 export default function Home() {
   return (
     <main >
-      <Baner />
-      <Cardapio />
+     <Link href={'/admin'}>
+      admin
+     </Link>
     </main>
   )
 }

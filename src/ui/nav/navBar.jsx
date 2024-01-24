@@ -1,9 +1,9 @@
 import Link from "next/link";
-import styles from "./menu.module.css";
+import styles from "./nav.module.css";
 import { FaUser } from "react-icons/fa";
 import { IoBag } from "react-icons/io5";
 
-export default function Menu() {
+export default function NavBar() {
     return (
         <header className={styles.menu}>
             <Link href={'/'} className={styles.menu__logo}><h1>Logo</h1></Link>

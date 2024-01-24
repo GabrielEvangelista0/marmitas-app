@@ -2,7 +2,7 @@
 import Link from "next/link";
 import style from './style.module.css';
 import React, { useEffect, useState } from "react";
-import { getData } from "@/utils/crud";
+import { getData } from "@/lib/crud";
 
 export default function Admin() {
   const [data, setData] = useState([])
