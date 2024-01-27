@@ -1,20 +1,14 @@
-export function postData(url, data){
-    fetch(url, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(data)
-    })
-      .then(res => res.json())
-      .then(data => {
-        console.log(data)
-      })
-      .catch(err => console.log(err))
+import db from "./conectDB";
+import { doc, setDoc, collection, getDocs } from "firebase/firestore";
+
+
+export async function getData(){
+  const ref = collection(db, "pratos");
+  const data = await getDocs(ref);
+  return await data.docs.map(doc => ({...doc.data(), id: doc.id}));
 }
 
-export async function getData(url) {
-  const res = await fetch(url)
-  const data = await res.json()
-  return data
+export async function createData(data){
+  const ref = collection(db, "pratos");
+  await setDoc(doc(ref), data)
 }
