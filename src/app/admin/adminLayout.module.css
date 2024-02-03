@@ -1,5 +1,6 @@
 .layout{
     display: flex;
+    grid-template-columns: 1fr 1fr;
     padding: 1rem;
     gap: 2rem;
     min-height: 85vh;

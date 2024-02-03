@@ -16,12 +16,7 @@ export default async function Admin() {
         <p className={styles.totalValue}>100,00</p>
       </Card>
       <Card width='100%' height='100%' title='Ultimas vendas' className={styles.ultimasVendas}>
-        {data.map(item => (
-          <div key={item.id}>
-            <p> {item.nome} </p>
-            <Image src={item.imagem} width={100} height={100} />
-          </div>
-        ))}
+        
       </Card>
       <Card width="100%" height="100%" title="Grafico de vendas" className={styles.grafico}>
       </Card>

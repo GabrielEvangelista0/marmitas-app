@@ -3,9 +3,9 @@ import style from './adminLayout.module.css'
 
 export default function Layout({ children }) {
     return (
-        <div className={style.layout}>
+        <main className={style.layout}>
             <AdminMenu/>
-            <section>{children}</section>
-        </div>
+            {children}
+        </main>
     )
 }

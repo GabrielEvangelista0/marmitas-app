@@ -2,6 +2,7 @@
     padding: 1rem;
     border: 2px solid var(--font);
     border-radius: 25px;
+    width: 300px;
 }
 
 .titulo{
