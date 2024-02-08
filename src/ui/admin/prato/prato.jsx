@@ -1,3 +1,4 @@
+'use client';
 import Link from 'next/link';
 import style from './admPrato.module.css';
 import Image from 'next/image';

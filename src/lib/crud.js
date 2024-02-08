@@ -1,5 +1,5 @@
-import db from "./conectDB";
-import { doc, setDoc, collection, getDocs, getDoc } from "firebase/firestore";
+import {db} from "./conectDB";
+import { doc, setDoc, collection, getDocs, getDoc, deleteDoc } from "firebase/firestore";
 
 
 export async function getData(){
@@ -8,13 +8,21 @@ export async function getData(){
   return await data.docs.map(doc => ({...doc.data(), id: doc.id}));
 }
 
-export async function getDataById(collection, id){
-  const ref = doc(db, collection, id);
+export async function getDataById(pasta, id){
+  const ref = doc(db, pasta, id);
   const docSnap = await getDoc(ref);
   return await docSnap.data();
 }
 
-export async function createData(data){
-  const ref = collection(db, "pratos");
+export async function createData(pasta, data){
+  const ref = collection(db, pasta);
   await setDoc(doc(ref), data)
 }
+
+ export async function deleteData(pasta, id){
+  const ref = doc(db, pasta, id);
+  await deleteDoc(ref);
+  alert(`item ${id} deletado`)
+  window.location.reload();
+}
+
