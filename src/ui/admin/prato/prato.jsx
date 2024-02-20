@@ -7,7 +7,7 @@ export default function AdmPrato(props) {
     const { nome, descricao, src, id, onClickExcluir } = props;
     return (
         <div className={style.prato}>
-            <Image src={src} width={100} height={100} alt='imagem do prato'/>
+            <Image src={src} width={100} height={100} alt='imagem do prato' priority={true}/>
             <div>
                 <h3 className={style.nome}> {nome} </h3>
                 <p> {descricao} </p>

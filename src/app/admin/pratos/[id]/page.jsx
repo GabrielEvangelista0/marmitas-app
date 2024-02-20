@@ -11,7 +11,7 @@ export default async function EditarPrato({params}){
         <section className={style.container}>
             <div className={style.info}>
             <h2> {prato.nome} </h2>
-            <Image className={style.img} src={prato.imagem} width={250} height={250} alt="imagem do prato" />
+            <Image className={style.img} src={prato.imagemUrl} width={250} height={250} alt="imagem do prato" />
             </div>
             <AdmForm
             nome={prato.nome}

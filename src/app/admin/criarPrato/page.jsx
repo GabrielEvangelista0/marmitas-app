@@ -6,88 +6,95 @@ import AdmForm from "@/ui/admin/admForm/admForm";
 import style from './criarPrato.module.css';
 import { createData } from "@/lib/crud";
 
+
 export default function CriarPrato() {
-    const [imagem, setImagem] = useState({
-        file: '',
-        url: '',
-    });
-    const [values, setValues] = useState({
-        id: btoa(Math.random().toString()),
-        nome: '',
-        descricao: '',
-        categoria: '',
-        preco: '',
-    });
+	// Estado para gerenciar a imagem e os valores do formulário
+	const [imagem, setImagem] = useState({
+		file: '',
+		url: '',
+	});
+	const [values, setValues] = useState({
+		id: btoa(Math.random().toString()),
+		nome: '',
+		descricao: '',
+		categoria: '',
+		preco: '',
+	});
 
-    function handleInputChange(e) {
-        const { value, name } = e.target;
-        setValues({
-            ...values,
-            [name]: value,
-        });
-    }
+	// Lidar com a mudança de entrada nos campos do formulário
+	function handleInputChange(e) {
+		const { value, name } = e.target;
+		setValues({
+			...values,
+			[name]: value,
+		});
+	}
 
-    function handleImageChange(e) {
-        const file = e.target.files[0];
-        setImagem({
-            ...imagem,
-            file: file,
-        });
-    }
+	// Lidar com a mudança de imagem no formulário
+	function handleImageChange(e) {
+		const file = e.target.files[0];
+		setImagem({
+			...imagem,
+			file: file,
+		});
+	}
 
-    function ImageUpload() {
-        return new Promise((resolve, reject) => {
-            const imageRef = ref(storage, `/pratos/${imagem.file.name + values.id}`);
-            uploadBytes(imageRef, imagem.file).then((snapshot) => {
-                getDownloadURL(snapshot.ref).then((url) => {
-                    setImagem({
-                        ...imagem,
-                        url: url,
-                    });
+	// Realizar upload da imagem e retornar uma Promise
+	function ImageUpload() {
+		return new Promise((resolve, reject) => {
+			const imageRef = ref(storage, `/pratos/${imagem.file.name + values.id}`);
+			uploadBytes(imageRef, imagem.file).then((snapshot) => {
+				getDownloadURL(snapshot.ref).then((url) => {
+					setImagem({
+						...imagem,
+						url: url,
+					});
 
-                    resolve({
-                        ...values,
-                        imagemUrl: url,
-                    });
-                }).catch((error) => {
-                    reject(error);
-                });
-            });
-        });
-    }
+					resolve({
+						...values,
+						imagemUrl: url,
+					});
+				}).catch((error) => {
+					reject(error);
+				});
+			});
+		});
+	}
 
-    async function handleSubmit(e) {
-        e.preventDefault();
+	// Lidar com a submissão do formulário
+	async function handleSubmit(e) {
+		e.preventDefault();
 
-        try {
-            const pratoData = await ImageUpload();
-            createData('pratos', pratoData)
-            console.log(pratoData);
-            alert('Prato criado');
-        } catch (error) {
-            console.error('Erro ao fazer upload da imagem:', error);
-        }
-    }
+		try {
+			// Fazer upload da imagem e criar dados do prato
+			const pratoData = await ImageUpload();
+			createData('pratos', pratoData)
+			console.log(pratoData);
+			alert('Prato criado');
+		} catch (error) {
+			console.error('Erro ao fazer upload da imagem:', error);
+		}
+	}
 
-    return (
-        <section className={style.criarPrato}>
-            <h2 className={style.title}>
-                Criar prato
-            </h2>
-            <div className={style.form}>
-                <AdmForm
-                    nome='nome'
-                    descricao='descriçao'
-                    categoria='categoria'
-                    preco='preco'
-                    submit={handleSubmit}
-                    change={handleInputChange}
-                    imageChange={handleImageChange}
-                    hImg='criar'
-                    bImg='criar'
-                    bP='criar'
-                />
-            </div>
-        </section>
-    );
+	// Renderizar o componente
+	return (
+		<section className={style.criarPrato}>
+			<h2 className={style.title}>
+				Criar prato
+			</h2>
+			<div className={style.form}>
+				{/* Utilizar o componente AdmForm para os campos de entrada e botões */}
+				<AdmForm
+					nome='nome'
+					descricao='descrição'
+					categoria='categoria'
+					preco='preço'
+					submit={handleSubmit}
+					change={handleInputChange}
+					imageChange={handleImageChange}
+					bP='criar'
+				/>
+			</div>
+		</section>
+	);
 }
