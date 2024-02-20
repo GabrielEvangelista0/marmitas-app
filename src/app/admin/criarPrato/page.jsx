@@ -1,67 +1,93 @@
 'use client';
 import { storage } from "@/lib/conectDB";
-import { createData } from "@/lib/crud";
-import AdmForm from "@/ui/admin/admForm/admForm";
-import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
+import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { useState } from "react";
+import AdmForm from "@/ui/admin/admForm/admForm";
+import style from './criarPrato.module.css';
+import { createData } from "@/lib/crud";
 
 export default function CriarPrato() {
-    const [imagem, setImagem] = useState()
+    const [imagem, setImagem] = useState({
+        file: '',
+        url: '',
+    });
     const [values, setValues] = useState({
-        id: btoa(Math.random().toString)
-    })
+        id: btoa(Math.random().toString()),
+        nome: '',
+        descricao: '',
+        categoria: '',
+        preco: '',
+    });
+
     function handleInputChange(e) {
-        const { value, name } = e.target
+        const { value, name } = e.target;
         setValues({
             ...values,
             [name]: value,
-        })
-    }
-    function handleImageChange(e) {
-        const file = e.target.files[0]
-        setImagem(file)
-    }
-    function handleSubmit(e) {
-        e.preventDefault()
-        ImageUpload()
-        createData('pratos' ,values)
-        alert('prato criado')
-    }
-    function ImageUpload(e) {
-        //e.preventDefault()
-        if (imagem && values.nome && values.descricao && values.categoria && values.preco) {
-            const imageRef = ref(storage, `/pratos/${imagem.name + values.id}`);
-            uploadBytes(imageRef, imagem).then((snapshot) => {
-              getDownloadURL(snapshot.ref).then((url) => {
-                setValues({
-                  ...values,
-                  imagem: url
-                })
-              });
-            });
-          } else {
-            alert('termine de preencher o formulario')
-          }
+        });
     }
 
-    console.log(imagem)
+    function handleImageChange(e) {
+        const file = e.target.files[0];
+        setImagem({
+            ...imagem,
+            file: file,
+        });
+    }
+
+    function ImageUpload() {
+        return new Promise((resolve, reject) => {
+            const imageRef = ref(storage, `/pratos/${imagem.file.name + values.id}`);
+            uploadBytes(imageRef, imagem.file).then((snapshot) => {
+                getDownloadURL(snapshot.ref).then((url) => {
+                    setImagem({
+                        ...imagem,
+                        url: url,
+                    });
+
+                    resolve({
+                        ...values,
+                        imagemUrl: url,
+                    });
+                }).catch((error) => {
+                    reject(error);
+                });
+            });
+        });
+    }
+
+    async function handleSubmit(e) {
+        e.preventDefault();
+
+        try {
+            const pratoData = await ImageUpload();
+            createData('pratos', pratoData)
+            console.log(pratoData);
+            alert('Prato criado');
+        } catch (error) {
+            console.error('Erro ao fazer upload da imagem:', error);
+        }
+    }
+
     return (
-        <section>
-            <h2>
+        <section className={style.criarPrato}>
+            <h2 className={style.title}>
                 Criar prato
             </h2>
-            <AdmForm
-                nome='nome'
-                descricao='descriçao'
-                categoria='categoria'
-                preco='preco'
-                submit={handleSubmit}
-                change={handleInputChange}
-                imageChange={handleImageChange}
-                hImg='criar'
-                bImg='criar'
-                bP='criar'
-            />
+            <div className={style.form}>
+                <AdmForm
+                    nome='nome'
+                    descricao='descriçao'
+                    categoria='categoria'
+                    preco='preco'
+                    submit={handleSubmit}
+                    change={handleInputChange}
+                    imageChange={handleImageChange}
+                    hImg='criar'
+                    bImg='criar'
+                    bP='criar'
+                />
+            </div>
         </section>
-    )
+    );
 }

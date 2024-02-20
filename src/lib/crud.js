@@ -19,6 +19,11 @@ export async function createData(pasta, data){
   await setDoc(doc(ref), data)
 }
 
+export async function updateData(pasta, id, data){
+  const ref = doc(db, pasta, id);
+  await setDoc(ref, data);
+}
+
  export async function deleteData(pasta, id){
   const ref = doc(db, pasta, id);
   await deleteDoc(ref);

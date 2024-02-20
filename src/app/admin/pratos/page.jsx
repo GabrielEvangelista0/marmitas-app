@@ -14,7 +14,7 @@ export default async function Page() {
                     key={item.id}
                     nome={item.nome}
                     descricao={item.descricao}
-                    src={item.imagem}
+                    src={item.imagemUrl}
                     id= {item.id}
                     //onClickExcluir={}
                 />
