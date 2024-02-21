@@ -1,11 +1,32 @@
 .prato{
     display: flex;
     align-items: center;
+    justify-content: space-between;
     margin-bottom: 1rem;
     padding: 1rem;
     gap: 1rem;
     border: 2px solid var(--font);
     border-radius: 1rem;
+}
+
+.nome{
+    font-size: 1.5rem;
+    margin-bottom: 0.5rem;
+    color: var(--color3);
+    font-weight: bold;
+}
+.info{
+    width: 50%;
+}
+
+.preco{
+    font-size: 1.5rem;
+    color: var(--color3);
+}
+
+.botoes{
+    display: flex;
+    gap: 1rem;
 }
 
 .botao{
