@@ -43,17 +43,22 @@ export default function CriarPrato() {
 	function ImageUpload() {
 		return new Promise((resolve, reject) => {
 			const imageRef = ref(storage, `/pratos/${imagem.file.name + values.id}`);
+			console.log(imageRef);
 			uploadBytes(imageRef, imagem.file).then((snapshot) => {
 				getDownloadURL(snapshot.ref).then((url) => {
 					setImagem({
 						...imagem,
 						url: url,
+						ref: `/pratos/${imagem.file.name + values.id}`
 					});
-
+					
 					resolve({
 						...values,
-						imagemUrl: url,
-					});
+						imagem: {
+							url: url,
+							ref: `/pratos/${imagem.file.name + values.id}`
+						}
+						});
 				}).catch((error) => {
 					reject(error);
 				});
