@@ -10,8 +10,8 @@ export default function AdmForm(props){
             <input type="number" name="preco" placeholder={preco} onChange={change}/>
             <input type="text" name="categoria" placeholder={categoria} onChange={change} required/>
     
-            <textarea name="descricao" id="descricao" placeholder={descricao} onChange={change} required cols="30" rows="10"></textarea>
-            <input type="file" name="imagem" onChange={imageChange} required/>
+            <textarea name="descricao" id="descricao" placeholder={descricao} onChange={change} cols="30" rows="10"></textarea>
+            <input type="file" name="imagem" onChange={imageChange}/>
             <button className={style.button} type="submit">{bP} prato</button>
         </form>
     )

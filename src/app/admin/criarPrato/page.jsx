@@ -14,12 +14,13 @@ export default function CriarPrato() {
 		url: '',
 	});
 	const [values, setValues] = useState({
-		id: btoa(Math.random().toString()),
+		//id: btoa(Math.random().toString()),
 		nome: '',
 		descricao: '',
 		categoria: '',
 		preco: '',
 	});
+	console.log(values);
 
 	// Lidar com a mudança de entrada nos campos do formulário
 	function handleInputChange(e) {
@@ -43,7 +44,6 @@ export default function CriarPrato() {
 	function ImageUpload() {
 		return new Promise((resolve, reject) => {
 			const imageRef = ref(storage, `/pratos/${imagem.file.name + values.id}`);
-			console.log(imageRef);
 			uploadBytes(imageRef, imagem.file).then((snapshot) => {
 				getDownloadURL(snapshot.ref).then((url) => {
 					setImagem({
@@ -51,14 +51,14 @@ export default function CriarPrato() {
 						url: url,
 						ref: `/pratos/${imagem.file.name + values.id}`
 					});
-					
+
 					resolve({
 						...values,
 						imagem: {
 							url: url,
 							ref: `/pratos/${imagem.file.name + values.id}`
 						}
-						});
+					});
 				}).catch((error) => {
 					reject(error);
 				});
@@ -74,8 +74,8 @@ export default function CriarPrato() {
 			// Fazer upload da imagem e criar dados do prato
 			const pratoData = await ImageUpload();
 			createData('pratos', pratoData)
-			console.log(pratoData);
 			alert('Prato criado');
+			window.location.reload();
 		} catch (error) {
 			console.error('Erro ao fazer upload da imagem:', error);
 		}

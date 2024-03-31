@@ -6,7 +6,7 @@ import { ref, deleteObject } from "firebase/storage";
 import { storage } from "@/lib/conectDB";
 
 export default async function Page() {
-    const data = await getData();
+    const data = await getData('pratos');
     console.log(data)
     function deleteImage(refImage) {
         const imagemRef = ref(storage, refImage)
